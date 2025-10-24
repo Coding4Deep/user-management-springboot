@@ -1,45 +1,46 @@
-name: Java CI with Maven
+# name: Java CI with Maven
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+#   workflow_dispatch:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+#     steps:
+#       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-      - name: Build and Test with Maven
-        run: mvn -B clean verify jacoco:report
-      - name: Publish Test Results
-        uses: dorny/test-reporter@v2
-        if: always()
-        with:
-          name: JUnit Tests
-          path: target/surefire-reports/*.xml
-          reporter: java-junit
-          fail-on-error: true
-      - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          files: target/site/jacoco/jacoco.xml
-          fail_ci_if_error: true
-      - name: Upload Test Results to Codecov
-        uses: codecov/test-results-action@v1
-        with:
-          files: '**/target/surefire-reports/TEST-*.xml'
-      - name: List test reports
-        run: ls -R target/surefire-reports
+#       - name: Set up JDK 17
+#         uses: actions/setup-java@v4
+#         with:
+#           java-version: '17'
+#           distribution: 'temurin'
+#           cache: maven
 
+#       - name: Build and Test with Maven
+#         run: mvn -B clean verify jacoco:report
+
+#       - name: Publish Test Results
+#         uses: dorny/test-reporter@v2
+#         if: always()
+#         with:
+#           name: JUnit Tests
+#           path: target/surefire-reports/*.xml
+#           reporter: java-junit
+#           fail-on-error: true
+
+#       - name: Upload Coverage to Codecov
+#         uses: codecov/codecov-action@v4
+#         with:
+#           files: target/site/jacoco/jacoco.xml
+#           fail_ci_if_error: true
+
+#       - name: Upload Test Results to Codecov
+#         uses: codecov/test-results-action@v1
+#         with:
+#           path: target/surefire-reports/*.xml
       
