@@ -37,8 +37,12 @@ jobs:
           reporter: junit
           cleanup: true
       
-      - name: Publish Coverage Report
-        uses: codecov/codecov-action@v4
+      - name: Publish Test Results
+        uses: dorny/test-reporter@v2.1.1
+        if: always()
         with:
-          files: target/site/jacoco/jacoco.xml
-          fail_ci_if_error: true
+          name: JUnit Tests
+          path: target/surefire-reports/*.xml
+          reporter: junit
+          cleanup: true
+
