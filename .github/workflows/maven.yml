@@ -38,5 +38,5 @@ jobs:
       - name: Upload Test Results to Codecov
         uses: codecov/test-results-action@v1
         with:
-          path: target/surefire-reports/*.xml
+          files: target/surefire-reports/*.xml
       
