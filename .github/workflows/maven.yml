@@ -28,9 +28,17 @@ jobs:
         run: mvn -B clean verify
 
       # 4️⃣ Optional: upload test results (nice for UI reporting)
-      - name: Upload test results
-        if: success() || failure()
-        uses: actions/upload-artifact@v4
+      - name: Publish Test Results
+        uses: dorny/test-reporter@v3
+        if: always()
         with:
-          name: test-results
-          path: target/surefire-reports/
+          name: JUnit Tests
+          path: target/surefire-reports/*.xml
+          reporter: junit
+          cleanup: true
+      
+      - name: Publish Coverage Report
+        uses: codecov/codecov-action@v4
+        with:
+          files: target/site/jacoco/jacoco.xml
+          fail_ci_if_error: true
